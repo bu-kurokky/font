@@ -6,7 +6,7 @@
 ![logo](./logo.png)
 
 ## 使い方
-[こちら](https://github.com/bu-kurokky/font/raw/main/ksentai.zip)をDLして解答してお使いください。  
+[こちら](https://github.com/bu-kurokky/font/raw/main/ksentai.zip)をDLして解凍してお使いください。  
 ちょっと変わった使い方ですが、「"」や「。」で濁音や半濁音のテンとマルを別のセットにしています。  
 そちらを使う場合は、通常の「カ"」と入力するか、サブセットに少し細めのfontを「ひらがな」に登録しています。
 （「か"」と入力すると、それっぽい感じになると思います。）  
@@ -40,5 +40,5 @@
 ![サブセット](./sub.png)
 
 ## その他
-作成秘話的なのはnoteに記載しています。  
+作成秘話的なのは[note](https://note.com/kurokky/n/n9a2fd019f04e)に記載しています。  
 もし、DLした際には「いいね！」でもしてください。
