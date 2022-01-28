@@ -1,9 +1,26 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>K本郷フォント、K光太郎フォント、Kイー！フォント確認ページ</title>
+<title>仮面ナンダーメーカー</title>
 <link rel="icon" href="./favi.svg" type="image/svg+xml">
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
+<meta property="og:url" content="https://pexr.net/fonts/maker.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://pexr.net/fonts/maker.png">
+<meta property="og:title" content="仮面ナンダーメーカー">
+<meta name="twitter:site" content="@black_tree">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
+<meta name="description" content="仮面ナンダーメーカー">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <style>
+*{
+	list-style:none;
+	box-sizing:border-box;
+}
+html{
+	font-family: 'Noto Sans JP', sans-serif;
+}
 body{
 	background:#000;
 	color:#fff;
@@ -24,6 +41,12 @@ main{
 	width:1024px;
 	margin:16px auto;
 }
+@media (max-width: 1023px) {
+	main{
+		width:100%;
+	}
+}
+
 main p{
 	text-align:center;
 }
@@ -32,47 +55,76 @@ footer{
 }
 </style>
 </head>
-<body onload="inputText('KHONGO')">
+<body onload="loadedPage()">
 <header>
-	<h1>K本郷フォント、K光太郎フォント、Kイー！フォント確認ページ</h1>
+	<h1>仮面ナンダーメーカー</h1>
 </header>
 <main>
 <form onsubmit="return false;">
-	<select name="font_type" onchange="fontChange()">
+<p style="text-align:left;">「カタカナ」と「仮面」「ー(ハイフン)」という文字のみ使えます</p>
+	<select name="font_type" onchange="changeFont()">
 		<option value="KHONGO">本郷フォント</option>
 		<option value="KKOTARO">光太郎フォント</option>
-		<option value="KEEE!">イー！フォント</option>
 	</select>
 <input type="text" value="サンプルー" name="base" onchange="inputText()">
 </form>
 <canvas id="myCanvas" width="100" height="100"></canvas>
 <p><button type="button" onclick="download()">画像としてDLする</button></p>
-<p>あくまでサンプル用です。カーニング（文字間）などが気に入らない人は<a href="./shocker.html">こちら</a>からfontをDLしてご自分で調整してください。</p>
+<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </main>
 <footer>
-KHONGO / KKOTARO / KEEE! それぞれのfontの権利は作者であるkurokkyに属します。<br>
+KHONGO / KKOTARO それぞれのfontの権利は作者であるkurokkyに属します。<br>
 あくまで「っぽく」作ったのでくれぐれも公式の迷惑にならないようにお使いください。<br>
 制作秘話は<a href="https://note.com/kurokky/n/n91931fe5f382">こちら</a>から。
 </footer>
 <script>
 const form = document.forms[0]
-let font = "KHONGO"
-
+const fonts = ['KHONGO','KKOTARO']
 function download() {
 	canvasDownload("#myCanvas");
 }
 
-function fontChange(){
-	font = form.font_type.value
+function loadedPage(){
+		const params = (new URL(window.location.href)).searchParams
+		let font = 'KHONGO'
+		if (params.get('font')){
+			font = params.get('font')
+		}
+		let select_id = fonts.indexOf(font)
+		if (select_id == -1){
+			font = 'KHONGO'
+			select_id = 0
+		}
+		form.font_type.options[select_id].selected = true
+		if (params.get('text')){
+			form.base.value = params.get('text')
+		}
+		inputText(font)
+}
+function changeHistory(){
+	let font = form.font_type.value
+	const base_url = window.location.href.replace(/\?.+/g,"")
+	let url = `${base_url}?font=${font}`
+	if (form.base.value != ""){
+		url = `${base_url}?font=${font}&text=${form.base.value}`
+	}
+	history.pushState('', '変身ロゴメーカー', encodeURI(url))
+}
+
+function changeFont(){
+	let font = form.font_type.value
+	changeHistory()
 	inputText(font)
 }
-function inputText(font){
+function inputText(font = false){
 	if (!font){
 		font = form.font_type.value
 	}
+	changeHistory()
 	let fontFace = new FontFace(font, `url('./fonts/${font}.woff2') format('woff2')`)
 	fontFace.load().then(function(loadedFont){
-		document.fonts.add(loadedFont);
+		document.fonts.add(loadedFont)
 		let text = form.base.value
 		let canvas = document.getElementById('myCanvas')
 		canvas.width = text.length*80
@@ -80,19 +132,12 @@ function inputText(font){
 		let ctx = canvas.getContext('2d')
 		ctx.textBaseline = "middle"
 		ctx.textAlign = "center"
-		ctx.clearRect(0, 0, 1000, 100)
-		if (font == "KEEE!"){
-			ctx.beginPath();
-			ctx.fillStyle = 'rgb(0,0, 0)';
-			ctx.fillRect(0, 0, canvas.width, canvas.height);
-			ctx.fillStyle = 'rgba(255, 255, 255)'
-		}else{
-			ctx.fillStyle = 'rgba(255, 0, 0)'
-		}
+		ctx.clearRect(0, 0, document.width, 100)
+		ctx.fillStyle = 'rgba(255, 0, 0)'
 		ctx.font = `100px '${font}'`
 		ctx.fillText(text, text.length*80/2, 60)
 	}).catch(function(e){
-		console.log("eeor")
+		alert("ごめんなさい、なんかエラーです。")
 	})
 
 }
