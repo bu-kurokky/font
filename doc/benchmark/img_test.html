@@ -1,0 +1,217 @@
+<html>
+<head>
+<title>movie2image test(gif/apng/WebP)</title>
+<style>
+*{margin:0;padding:0;list-style:none;box-sizing: border-box;}
+main{
+	width:1024px;
+	margin:0px auto;
+	padding:12px 0;
+}
+
+div{
+	text-align:center;
+}
+
+h1{
+	font-size:120%;
+	padding-left:8px;
+	border-left:8px solid #000;
+	border-bottom:1px solid #000;
+	margin-bottom:16px;
+}
+
+ul{
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom:32px;
+}
+ul li{
+	border: 1px solid #000;
+	margin:8px 4px;
+	border-radius:4px;
+	width:49%;
+	text-align:center;
+	padding:8px 2px;
+}
+
+ul li:nth-child(odd){
+	margin-left:0;
+}
+
+ul li:nth-child(even){
+	margin-right:0;
+}
+
+li p{
+	font-weight:bold;
+}
+
+li img{
+	margin:16px 0;
+	border:1px solid #ccc;
+}
+
+code{
+	height:48px;
+	background:#000;
+	color:#fff;
+	width:100%;
+	padding:4px 0;
+	display:inline-block;
+}
+b{
+	color:#f00;
+}
+</style>
+</head>
+<body>
+<main>
+
+<h1>sample1 (1.4MB/100%)</h1>
+<div>
+<video controls="controls" muted="true"><source src="st_count.mov" loop="0" width="496" height="121">test1</video>
+</div>
+<ul>
+		<li>
+			<p> st_count_default.gif(96K/6.6%)</p>
+				<img src="./st_count_default.gif" width="496" height="121">
+		<code>ffmpeg -i st_count.mov st_count_default.gif</code>
+		</li>
+
+		<li>
+			<p> st_count_palette.gif(40K/2.7%)</p>
+				<img src="./st_count_palette.gif" width="496" height="121">
+		<code>ffmpeg -i st_count.mov -filter_complex "[0:v] fps=10:-1,split [a][b];[a] palettegen [p];[b][p] paletteuse" st_count_palette.gif</code>
+		</li>
+
+		<li>
+			<p> st_count_default.apng(732K/51.0%)</p>
+				<img src="./st_count_default.apng" width="496" height="121">
+		<code>ffmpeg -i st_count.mov -plays 0 st_count_default.apng</code>
+		</li>
+
+		<li>
+			<p> st_count_fps10.apng(732K/51.0%)</p>
+				<img src="./st_count_fps10.apng" width="496" height="121">
+		<code>ffmpeg -i st_count.mov -plays 0 -framerate 10 st_count_fps10.apng</code>
+		</li>
+
+		<li>
+			<p> st_count_palette.apng(192K/13.3%)</p>
+				<img src="./st_count_palette.apng" width="496" height="121">
+		<code>ffmpeg -i st_count.mov -i g_palette.png -framerate 10 -filter_complex paletteuse -plays 0 st_count_palette.apng</code>
+		</li>
+
+		<li>
+			<p> st_count_palette2.apng(40K/2.7%)</p>
+				<img src="./st_count_palette2.apng" width="496" height="121">
+		<code>gif2apng st_count_palette.gif st_count_palette2.apng</code>
+		</li>
+
+		<li>
+			<p> st_count_default.webp(16K/1.1%)</p>
+				<img src="./st_count_default.webp" width="496" height="121">
+		<code>ffmpeg -i st_count.mov -loop 0 st_count_default.webp</code>
+		</li>
+
+		<li>
+			<p> st_count_10_q100.webp(<b>1.5M/107.1%</b>)</p>
+				<img src="./st_count_10_q100.webp" width="496" height="121">
+		<code>ffmpeg -i st_count.mov -vcodec libwebp -quality 100 -filter:v fps=fps=10 -lossless 0 -loop 0 -an -vsync 0 st_count_10_q100.webp</code>
+		</li>
+
+		<li>
+			<p> st_count_10_q000.webp(212K/14.7%)</p>
+				<img src="./st_count_10_q000.webp" width="496" height="121">
+		<code>ffmpeg -i st_count.mov -vcodec libwebp -quality 0 -filter:v fps=fps=10 -lossless 0 -loop 0 -an -vsync 0 st_count_10_q000.webp</code>
+		</li>
+
+		<li>
+			<p> st_count_10_lv6.webp(804K/56%)</p>
+				<img src="./st_count_10_lv6.webp" width="496" height="121">
+		<code>ffmpeg -i st_count.mov -vcodec libwebp -compression_level 6 -filter:v fps=fps=10 -lossless 0 -loop 0 -preset 4 -an -vsync 0 st_count_10_lv6.webp</code>
+		</li>
+
+		<li>
+			<p> st_count_10_lv0.webp(804K/56%)</p>
+				<img src="./st_count_10_lv0.webp" width="496" height="121">
+		<code>ffmpeg -i st_count.mov -vcodec libwebp -compression_level 0  -filter:v fps=fps=10 -lossless 0 -loop 0 -preset 4 -an -vsync 0 st_count_10_lv0.webp</code>
+		</li>
+</ul>
+<h1>sample2 gradation.mov(1.8MB/100%)</h1>
+<div>
+<video controls="controls" muted="true"><source src="gradation.mov" loop="0" width="496" height="121">test1</video>
+</div>
+<ul>
+	<li>
+		<p> gradation_default.gif(1.1M/61.1%)</p>
+		<img src="./gradation_default.gif" width="496" height="121">
+		<code>ffmpeg -i gradation.mov gradation_default.gif</code>
+	</li>
+
+	<li>
+		<p> gradation_palette.gif(<b>2.2M/122%</b>)</p>
+		<img src="./gradation_palette.gif" width="496" height="121">
+		<code>ffmpeg -i gradation.mov -filter_complex "[0:v] fps=10:-1,split [a][b];[a] palettegen [p];[b][p] paletteuse" gradation_palette.gif</code>
+	</li>
+
+	<li>
+		<p> gradation_default.apng(<b>2.2M/122%</b>)</p>
+		<img src="./gradation_default.apng" width="496" height="121">
+		<code>ffmpeg -i gradation.mov -plays 0 gradation_default.apng</code>
+	</li>
+
+	<li>
+		<p> gradation_fps10.apng(<b>2.2M/122%</b>)</p>
+		<img src="./gradation_fps10.apng" width="496" height="121">
+		<code>ffmpeg -i gradation.mov -plays 0 -framerate 10 gradation_fps10.apng</code>
+	</li>
+
+	<li>
+		<p> gradation_palette.apng(<b>6.9M/383%</b>)</p>
+		<img src="./gradation_palette.apng" width="496" height="121">
+		<code>ffmpeg -i gradation.mov -i g_palette.png -framerate 10 -filter_complex paletteuse -plays 0 gradation_palette.apng</code>
+	</li>
+
+	<li>
+		<p> gradation_palette2.apng(1.5M/83%)</p>
+		<img src="./gradation_palette2.apng" width="496" height="121">
+		<code>gif2apng gradation_palette.gif gradation_palette2.apng</code>
+	</li>
+
+	<li>
+		<p> gradation_default.webp( 35K/1.8%)</p>
+		<img src="./gradation_default.webp" width="496" height="121">
+		<code>ffmpeg -i gradation.mov -loop 0 gradation_default.webp</code>
+	</li>
+
+	<li>
+		<p> gradation_10_q100.webp(363K/19.6%)</p>
+		<img src="./gradation_10_q100.webp" width="496" height="121">
+		<code>ffmpeg -i gradation.mov -vcodec libwebp -quality 100 -filter:v fps=fps=10 -lossless 0 -loop 0 -an -vsync 0 gradation_10_q100.webp</code>
+	</li>
+
+	<li>
+		<p> gradation_10_q000.webp(71K/3.8%)</p>
+		<img src="./gradation_10_q000.webp" width="496" height="121">
+		<code>ffmpeg -i gradation.mov -vcodec libwebp -quality 0 -filter:v fps=fps=10 -lossless 0 -loop 0 -an -vsync 0 gradation_10_q000.webp</code>
+	</li>
+
+	<li>
+		<p> gradation_10_lv6.webp(120K/6.5%)</p>
+		<img src="./gradation_10_lv6.webp" width="496" height="121">
+		<code>ffmpeg -i gradation.mov -vcodec libwebp -compression_level 6 -filter:v fps=fps=10 -lossless 0 -loop 0 -preset 4 -an -vsync 0 gradation_10_lv6.webp</code>
+	</li>
+
+	<li>
+		<p> gradation_10_lv0.webp(120K/6.5%)</p>
+		<img src="./gradation_10_lv0.webp" width="496" height="121">
+		<code>ffmpeg -i gradation.mov -vcodec libwebp -compression_level 0  -filter:v fps=fps=10 -lossless 0 -loop 0 -preset 4 -an -vsync 0 gradation_10_lv0.webp</code>
+	</li>
+</ul>
+
+
+</main>
+</body>
+</html>
